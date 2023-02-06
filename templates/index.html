@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang=ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Fyc</title>
+    <link rel="stylesheet" href="../static/css/css.css">
+</head>
+<body>
+{% for (id, name) in cars %}
+    <a href="http://localhost:8080/car/{{ id }}">{{ name }}</a><br>
+{% endfor %}
+</body>
+</html>
