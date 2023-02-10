@@ -3,4 +3,13 @@
     height: 50%;
 }
 
-
+html {
+    background-image: url(pliotcaunt.jpg);
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-attachment: fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
