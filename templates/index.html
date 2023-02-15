@@ -6,8 +6,11 @@
     <link rel="stylesheet" href="../static/css/css.css">
 </head>
 <body>
-{% for (id, name) in cars %}
+<font color="#000000">
+<h1>{% for (id, name) in cars %}
     <a href="http://localhost:8080/car/{{ id }}">{{ name }}</a><br>
 {% endfor %}
+</h1>
+</font>
 </body>
 </html>
