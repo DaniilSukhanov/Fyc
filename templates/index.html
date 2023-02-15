@@ -1,16 +1,12 @@
-<!DOCTYPE html>
-<html lang=ru">
-<head>
-    <meta charset="UTF-8">
-    <title>Fyc</title>
-    <link rel="stylesheet" href="../static/css/css.css">
-</head>
-<body>
+{% extends "header.html" %}
+
+
+{% block content %}
+<meta charset="UTF-8">
 <font color="#000000">
 <h1>{% for (id, name) in cars %}
     <a href="http://localhost:8080/car/{{ id }}">{{ name }}</a><br>
 {% endfor %}
 </h1>
 </font>
-</body>
-</html>
+{% endblock %}
