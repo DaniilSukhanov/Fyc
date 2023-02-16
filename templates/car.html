@@ -26,6 +26,13 @@
 <h1>Макс скорость: {{ max_speed }}</h1>
 <h1>л. с.: {{ power }}</h1>
 <h1>Объем топливного бака: {{ fuel_tank_volume }}</h1>
+<h1>Расход топлива на 1 километр: {{ consumption_petrol }}</h1>
 <h1>Страна: {{ assembly_country }}</h1>
 <h1>Название модели {{ name_car }}</h1>
+<h1>Цена автомобиля: {{ price }}</h1>
+<body>
+  <form action= {{ orig }} target="_blank">
+   <button>Подробнее у производителя</button>
+  </form>
+ </body>
 {% endblock %}
