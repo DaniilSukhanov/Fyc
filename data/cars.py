@@ -15,6 +15,8 @@ class Cars(SqlAlchemyBase):
     assembly_country = sa.Column(sa.String)
     images = sa.Column(sa.String)
     name_car = sa.Column(sa.String)
+    price = sa.Column(sa.String)
+    orig = sa.Column(sa.String)
 
     def get_all_parameters(self):
         cls = self.__class__
