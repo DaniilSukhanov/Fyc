@@ -1,0 +1,16 @@
+{% extends "header.html" %}
+
+{% block content %}
+<body>
+<form action="" method="post">
+    {{ form.hidden_tag() }}
+    <div>{{ message }}</div>
+    {% for element in form if element.name != 'csrf_token' %}
+    <p>
+        {{ element.label() }}<br>
+        {{ element() }}
+    </p>
+    {% endfor %}
+</form>
+</body>
+{% endblock %}

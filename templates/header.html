@@ -20,6 +20,14 @@
 <header>
     <nav class="navbar navbar-light bg-light">
         <h1 class="navbar-brand">FYC</h1>
+        {% if current_user.is_authenticated %}
+            <a class="navbar-brand" href="/logout">{{ current_user.email }}</a>
+        {% else %}
+            <p>
+                <a class="btn btn-primary " href="/register">Register</a>
+                <a class="btn btn-success" href="/login">Log in</a>
+            </p>
+        {% endif %}
         <h6><a href="/">Седаны</a></h6>
     </nav>
 </header>

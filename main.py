@@ -1,9 +1,28 @@
 import flask
+from flask_login import login_user, LoginManager, login_required,\
+    logout_user, current_user
+
 from data.database import Database
 from data.cars import Cars
 import os
 
+from data.login_form import LoginForm
+from data.user import User
+from data.register_form import RegisterForm
+
+
 app = flask.Flask(__name__)
+app.config["SECRET_KEY"] = "SECRET_KEY"
+
+login_manager = LoginManager()
+login_manager.init_app(app)
+
+
+@login_manager.user_loader
+def load_user(user_id: str):
+    with Database() as session:
+        user = session.query(User).get(int(user_id))
+    return user
 
 
 @app.route("/")
@@ -29,6 +48,58 @@ def car(id_car: int):
     )
     data_car["list_images"] = images
     return flask.render_template("car.html", **data_car)
+
+
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    form = RegisterForm()
+    if form.is_submitted():
+        with Database() as session:
+            user_email = session.query(User.email).filter(
+                User.email == form.email.data
+            ).all()
+            if user_email:
+                return flask.render_template(
+                    'register.html', form=form,
+                    message='Пользователь с такой почтой есть.'
+                )
+            if form.repeated_password.data != form.password.data:
+                return flask.render_template(
+                    'register.html', form=form,
+                    message='Пароли не совпали.'
+                )
+            user = User()
+            user.name = form.name.data
+            user.surname = form.surname.data
+            user.email = form.email.data
+            user.set_password(form.password.data)
+            user.age = form.ago.data
+            session.add(user)
+            session.commit()
+        return flask.redirect("/")
+    return flask.render_template("register.html", form=form)
+
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    form = LoginForm()
+    if form.validate_on_submit():
+        with Database() as session:
+            user = session.query(User).filter(User.email == form.email.data).first()
+            if user and user.check_password(form.password.data):
+                login_user(user, remember=form.remember_me.data)
+                return flask.redirect("/")
+        return flask.render_template('login.html',
+                               message="Неправильный логин или пароль",
+                               form=form)
+    return flask.render_template('login.html', title='Авторизация', form=form)
+
+
+@app.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    return flask.redirect("/")
 
 
 def main():
