@@ -41,7 +41,7 @@ def index():
         type_cars = tuple(set(car.type for car in session.query(Cars).all()))
     return flask.render_template(
         "index.html", type_cars=type_cars, dict_cars={
-            0: "Легковые",
+            0: "Седаны",
             1: "Минивены"
         }
     )
