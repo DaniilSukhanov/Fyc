@@ -25,13 +25,25 @@ def load_user(user_id: str):
     return user
 
 
-@app.route("/")
-def index():
+@app.route("/cars/<int:type_cars>")
+def cars(type_cars: int):
     with Database() as session:
         name_cars = session.query(Cars).all()
     return flask.render_template(
-        "index.html",
-        cars=[(car.id, car.name_car) for car in name_cars]
+        "cars.html",
+        cars=[(car.id, car.name_car) for car in name_cars if car.type == type_cars]
+    )
+
+
+@app.route("/")
+def index():
+    with Database() as session:
+        type_cars = tuple(set(car.type for car in session.query(Cars).all()))
+    return flask.render_template(
+        "index.html", type_cars=type_cars, dict_cars={
+            0: "Легковые",
+            1: "Минивены"
+        }
     )
 
 
@@ -104,7 +116,7 @@ def logout():
 
 def main():
     Database.connect("db/db.db")
-    app.run(port=8080, host="127.0.0.1")
+    app.run(port=8081, host="127.0.0.1")
 
 
 if __name__ == "__main__":

@@ -17,6 +17,7 @@ class Cars(SqlAlchemyBase):
     name_car = sa.Column(sa.String)
     price = sa.Column(sa.String)
     orig = sa.Column(sa.String)
+    type = sa.Column(sa.Integer)
 
     def get_all_parameters(self):
         cls = self.__class__
